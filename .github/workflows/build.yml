@@ -1,0 +1,51 @@
+name: Build AC1200G+ Firmware
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential gcc g++ make cmake patch git unzip wget \
+          libncurses5-dev m4 bison gawk flex zlib1g-dev autoconf autopoint \
+          libtool shtool autogen mtd-utils intltool sharutils \
+          docbook-xsl xsltproc u-boot-tools device-tree-compiler \
+          python2 gperf liblzo2-dev uuid-dev lzma-dev liblzma-dev \
+          binutils-dev dos2unix qemu \
+          libglib2.0-dev gtk-doc-tools \
+          libc6-i386 lib32stdc++6 lib32z1 libelf1:i386 libncurses5:i386
+
+    - name: Download ASUS GPL source
+      run: |
+        wget https://dlcdnets.asus.com/pub/ASUS/wireless/RT-AC1200G+/GPL_RT_AC1200GPlus_300438252272.zip -O source.zip
+        unzip source.zip -d source
+        ls -lah source
+
+    - name: Setup toolchain
+      run: |
+        TOOLCHAIN=$(find source -type d -name "hndtools-arm-linux*")
+        echo "Using toolchain: $TOOLCHAIN"
+        echo "$TOOLCHAIN/bin" >> $GITHUB_PATH
+
+    - name: Build firmware
+      run: |
+        cd source/*/src-rt-*/src
+        make RT-AC1200G+
+
+    - name: Upload firmware
+      uses: actions/upload-artifact@v3
+      with:
+        name: firmware
+        path: source/*/src-rt-*/src/images/*.trx
