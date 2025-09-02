@@ -28,7 +28,7 @@ jobs:
         sudo apt-get install --no-install-recommends -y \
             bash bison bzip2 diffutils file flex g++ gawk gcc-multilib \
             gettext gperf groff-base libncurses-dev libexpat1-dev libslang2 \
-            libssl-dev libtool libxml-parser-perl make patch perl pkg-config \
+            libssl-dev libtool autoconf-archive libxml-parser-perl make patch perl pkg-config \
             sed shtool tar texinfo unzip zlib1g zlib1g-dev automake autoconf
         
         # 安装 32 位库（交叉编译工具链需要）
