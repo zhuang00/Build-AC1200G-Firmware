@@ -33,21 +33,21 @@ jobs:
         unzip source.zip -d source
         ls -lah source
 
-   - name: Setup toolchain and build
-  run: |
-    # 查找 src-rt-*/src
-    SRC_DIR=$(find source/release -type d -path "*/src-rt-*/src" | head -n 1)
-    TOOLCHAIN_DIR=$(find source -type d -name "toolchain*" | head -n 1)
-
-    echo "SRC_DIR: $SRC_DIR"
-    echo "TOOLCHAIN_DIR: $TOOLCHAIN_DIR"
-
-    # 添加 toolchain 到 PATH
-    echo "$TOOLCHAIN_DIR/bin" >> $GITHUB_PATH
-
-    # 进入源码目录并编译
-    cd $SRC_DIR
-    make RT-AC1200G+
+    - name: Setup toolchain and build
+      run: |
+        # 查找 src-rt-*/src
+        SRC_DIR=$(find source/release -type d -path "*/src-rt-*/src" | head -n 1)
+        TOOLCHAIN_DIR=$(find source -type d -name "toolchain*" | head -n 1)
+    
+        echo "SRC_DIR: $SRC_DIR"
+        echo "TOOLCHAIN_DIR: $TOOLCHAIN_DIR"
+    
+        # 添加 toolchain 到 PATH
+        echo "$TOOLCHAIN_DIR/bin" >> $GITHUB_PATH
+    
+        # 进入源码目录并编译
+        cd $SRC_DIR
+        make RT-AC1200G+
 
     
 
