@@ -49,18 +49,13 @@ jobs:
 
         # 解压 tgz
         tar -xzf GPL_RT-AC1200G+_3.0.0.4.382.52272-g73d3ea2_fix.tgz
+    - name: Add toolchain to PATH
+      run: echo "/home/runner/work/Build-AC1200G-Firmware/Build-AC1200G-Firmware/asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin" >> $GITHUB_PATH
 
     - name: Setup toolchain and build firmware
       run: |
         SRC_DIR=asuswrt/release/src-rt-9.x/src
         TOOLCHAIN_BIN=asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
-
-        # 添加工具链到 PATH
-        export PATH=$TOOLCHAIN_BIN:$PATH
-        echo "asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin" >> $GITHUB_PATH
-
-        # 验证交叉编译器可用
-        arm-brcm-linux-uclibcgnueabi-gcc --version
 
         # 编译固件
         cd $SRC_DIR
