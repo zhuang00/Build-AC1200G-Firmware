@@ -23,24 +23,24 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install -y \
-          build-essential gcc g++ make cmake patch git unzip wget \
-          libncurses5-dev m4 bison gawk flex zlib1g-dev autoconf autopoint \
-          libtool shtool autogen mtd-utils intltool sharutils \
-          docbook-xsl xsltproc u-boot-tools device-tree-compiler \
-          python2 gperf liblzo2-dev uuid-dev lzma-dev liblzma-dev \
-          binutils-dev dos2unix qemu \
-          libglib2.0-dev gtk-doc-tools \
-          libc6-i386 lib32stdc++6 lib32z1 libelf1:i386 libncurses5:i386
-        sudo apt-get install -y --no-install-recommends autoconf automake bash bison bzip2 diffutils file flex g++ gawk gcc-multilib gettext gperf groff-base libncurses-dev libexpat1-dev libslang2 libssl-dev libtool libxml-parser-perl make patch perl pkg-config  sed shtool tar texinfo unzip zlib1g zlib1g-dev
 
-        sudo apt-get install  -y lib32stdc++6 lib32z1-dev
+        # 安装基础编译工具和库
+        sudo apt-get install --no-install-recommends -y \
+            bash bison bzip2 diffutils file flex g++ gawk gcc-multilib \
+            gettext gperf groff-base libncurses-dev libexpat1-dev libslang2 \
+            libssl-dev libtool libxml-parser-perl make patch perl pkg-config \
+            sed shtool tar texinfo unzip zlib1g zlib1g-dev automake autoconf
         
-        sudo apt-get  -y --no-install-recommends install automake1.11
+        # 安装 32 位库（交叉编译工具链需要）
+        sudo apt-get install -y \
+            lib32stdc++6 lib32z1-dev libelf-dev:i386 libelf1:i386
         
-        sudo apt-get  -y install libelf-dev:i386 libelf1:i386
+        # 安装特定版本 automake（老源码兼容）
+        sudo apt-get install --no-install-recommends -y automake1.11
         
-        sudo apt-get  -y --no-install-recommends install lib32z1-dev lib32stdc++6
+        # 安装 Python 2 并创建 python 命令符号链接（老源码依赖）
+        sudo apt-get install -y python2
+        sudo ln -sf /usr/bin/python2 /usr/bin/python
 
     - name: Cache asuswrt source & toolchain
       uses: actions/cache@v3
