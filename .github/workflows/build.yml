@@ -65,14 +65,14 @@ jobs:
       run: |
         SRC_DIR=asuswrt/release/src-rt-9.x/src
         TOOLCHAIN_BIN=asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
-        # 进入工具链 bin 目录
-        cd asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
+        # 备份工具链自带 autoreconf
+        mv asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin/autoreconf \
+           asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin/autoreconf.bak
         
-        # 先备份原 autoreconf
-        mv autoreconf autoreconf.bak
-        
-        # 链接到系统的 autoreconf
-        ln -s /usr/bin/autoreconf autoreconf
+        # 链接到系统 autoreconf
+        ln -s /usr/bin/autoreconf \
+           asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin/autoreconf
+
 
 
 
