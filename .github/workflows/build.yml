@@ -45,7 +45,7 @@ jobs:
         make RT-AC1200G+
 
     - name: Upload firmware
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: firmware
         path: source/*/src-rt-*/src/images/*.trx
