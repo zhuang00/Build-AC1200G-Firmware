@@ -55,11 +55,9 @@ jobs:
         SRC_DIR=asuswrt/release/src-rt-9.x/src
         TOOLCHAIN_BIN=asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin
 
-        echo "SRC_DIR=$SRC_DIR"
-        echo "TOOLCHAIN_BIN=$TOOLCHAIN_BIN"
-
         # 添加工具链到 PATH
         export PATH=$TOOLCHAIN_BIN:$PATH
+        echo "asuswrt/release/src-rt-9.x/src/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3/bin" >> $GITHUB_PATH
 
         # 验证交叉编译器可用
         arm-brcm-linux-uclibcgnueabi-gcc --version
